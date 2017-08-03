@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/toolbar_fechar"
+        android:src="@mipmap/ic_add"
+        android:rotation="45"
+        android:alpha="0.7"
+        android:layout_width="45dp"
+        android:layout_height="45dp" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:gravity="center"
+        android:textColor="@color/azul_claro"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:text="CADASTRAR EXERCÍCIO"
+        android:layout_marginRight="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

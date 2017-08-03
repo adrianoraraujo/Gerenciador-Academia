@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Gerenciador de treino</string>
+    <string name="title_activity_lista_equipamento">ListaEquipamentoActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="equipamentos">Equipamentos</string>
+    <string name="meus_treinos">Meus Treinos</string>
+
+    <string-array name="categorias">
+        <item>Abdomên</item>
+        <item>Peito</item>
+        <item>Ombro</item>
+        <item>Costas</item>
+        <item>Biceps</item>
+        <item>Triceps</item>
+        <item>Panturrilha</item>
+        <item>Posterior</item>
+        <item>Outro</item>
+    </string-array>
+</resources>
