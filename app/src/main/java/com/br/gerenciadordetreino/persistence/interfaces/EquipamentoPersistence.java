@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.User;
 
 import java.util.List;
@@ -15,22 +16,22 @@ import java.util.List;
  */
 
 @Dao
-public  interface UserPersistence {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+public  interface EquipamentoPersistence {
+    @Query("SELECT * FROM equipamento")
+    List<Equipamento> getAllEquipamentos();
 
-    @Query("SELECT * FROM user where id LIKE  :id")
-    User findByName(String id);
+    @Query("SELECT * FROM equipamento where id LIKE  :nome")
+    Equipamento findByNameEquipamento(String nome);
 
-    @Query("SELECT COUNT(*) from user")
-    int countUsers();
+    @Query("SELECT COUNT(*) from equipamento")
+    int countEquipamentos();
 
     @Insert
-    void insertAll(User... users);
+    void insertAll(Equipamento... equipamentos);
 
     @Delete
-    void delete(User user);
+    void delete(Equipamento equipamento);
 
     @Update
-    void update(User user);
+    void update(Equipamento equipamento);
 }

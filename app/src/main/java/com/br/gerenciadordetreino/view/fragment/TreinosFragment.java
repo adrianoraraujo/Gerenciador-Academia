@@ -1,4 +1,4 @@
-package com.br.gerenciadordetreino.view;
+package com.br.gerenciadordetreino.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.view.adapters.ExercicioAdapter;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;

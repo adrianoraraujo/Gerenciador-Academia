@@ -5,20 +5,23 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.User;
+import com.br.gerenciadordetreino.persistence.interfaces.EquipamentoPersistence;
 import com.br.gerenciadordetreino.persistence.interfaces.UserPersistence;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class, Equipamento.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
     public abstract UserPersistence userDao();
+    public abstract EquipamentoPersistence equipamentoDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE =
-                    Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "user-database")
+                    Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "GerenciaAcademiaBase")
                             // allow queries on the main thread.
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
                             .allowMainThreadQueries()

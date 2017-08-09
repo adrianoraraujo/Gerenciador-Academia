@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 
 import com.br.gerenciadordetreino.R;
+import com.br.gerenciadordetreino.view.fragment.CategoriaEquipamentoFragment;
+import com.br.gerenciadordetreino.view.fragment.CategoriaEquipamentoFragment_;
+import com.br.gerenciadordetreino.view.fragment.TreinosFragment;
+import com.br.gerenciadordetreino.view.fragment.TreinosFragment_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -23,7 +27,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_home)
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends SuperActivity {
 
 
     @ViewById

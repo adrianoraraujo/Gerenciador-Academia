@@ -10,7 +10,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 
 @EActivity(R.layout.popup_fragment_treino)
-public class CadastroTreinoActivity extends AppCompatActivity {
+public class CadastroTreinoActivity extends SuperActivity {
 
     @AfterViews
     void init() {
@@ -19,14 +19,12 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     @Click(R.id.tv_fechar)
     void fechar() {
-        finish();
-        overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
+        closePopup();
     }
 
 
     @Override
     public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
+        closePopup();
     }
 }

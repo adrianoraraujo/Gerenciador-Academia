@@ -44,12 +44,20 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
     @Override
     public void onBindViewHolder(final EquipamentosViewHolder holder, int position) {
         Equipamento item = equipamentos.get(position);
+        setClicks(holder, item);
 
+        holder.tvTitle.setText(item.getNome());
+        holder.tvRepeticao.setText(String.valueOf(item.getRepeticoesDefault()));
+        holder.tvPeso.setText(String.valueOf(item.getPesoDefault()));
+        holder.tvSerie.setText(String.valueOf(item.getSeriesDefault()));
+    }
+
+    private void setClicks(final EquipamentosViewHolder holder, Equipamento item) {
         holder.imgEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, CadastroEquipamentoActivity_.class));
-                ((AppCompatActivity)context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
+                ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 
             }
         });
@@ -74,7 +82,7 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, CadastroTreinoActivity_.class));
-                ((AppCompatActivity)context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
+                ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 
             }
         });
@@ -87,7 +95,10 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
 
     public class EquipamentosViewHolder extends RecyclerView.ViewHolder {
         CircularImageView circularImageView;
-        TextView tvNome;
+        TextView tvTitle;
+        TextView tvPeso;
+        TextView tvRepeticao;
+        TextView tvSerie;
         CardView cardBody;
         ImageView imgEditar;
 
@@ -97,7 +108,11 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             cardBody = (CardView) itemView.findViewById(R.id.body_card);
             circularImageView = (CircularImageView) itemView.findViewById(R.id.circle_image);
             imgEditar = (ImageView) itemView.findViewById(R.id.img_editar);
-            //tvNome = (TextView) itemView.findViewById(R.id.tv_nome);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvPeso = (TextView) itemView.findViewById(R.id.tv_peso);
+            tvRepeticao = (TextView) itemView.findViewById(R.id.tv_repeticao);
+            tvSerie = (TextView) itemView.findViewById(R.id.tv_series);
+
         }
     }
 }

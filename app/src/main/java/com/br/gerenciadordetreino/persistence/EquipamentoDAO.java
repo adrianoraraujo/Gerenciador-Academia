@@ -1,28 +1,35 @@
 package com.br.gerenciadordetreino.persistence;
 
-import android.arch.persistence.room.Update;
 import android.content.Context;
 
-import com.br.gerenciadordetreino.model.User;
+import com.br.gerenciadordetreino.model.Equipamento;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by joaov on 13/07/2017.
  */
 
-public class UserDAO {
-    public static void createUser(Context context, User user) {
-        if(getUser(context)!= null){
-            updateUser(context, user);
+public class EquipamentoDAO {
+    public static void addEquipamento(Context context, Equipamento equipamento) {
+        if(getEquipamento(context, equipamento.getNome())!= null){
+            updateUser(context, equipamento);
         }else {
-            AppDatabase.getAppDatabase(context).userDao().insertAll(user);
+            AppDatabase.getAppDatabase(context).equipamentoDao().insertAll(equipamento);
         }
     }
 
-    public static User getUser(Context context) {
-        User user = AppDatabase.getAppDatabase(context).userDao().findByName("1");
-        return user;
+    public static List<Equipamento> getEquipamentos(Context context){
+        return  AppDatabase.getAppDatabase(context).equipamentoDao().getAllEquipamentos();
     }
-    public  static  void updateUser(Context context, User user){
-        AppDatabase.getAppDatabase(context).userDao().update(user);
+
+    public static Equipamento getEquipamento(Context context, String nome) {
+        Equipamento equipamento = AppDatabase.getAppDatabase(context).equipamentoDao().findByNameEquipamento(nome);
+        return equipamento;
+    }
+
+    public  static  void updateUser(Context context, Equipamento equipamento){
+        AppDatabase.getAppDatabase(context).equipamentoDao().update(equipamento);
     }
 }

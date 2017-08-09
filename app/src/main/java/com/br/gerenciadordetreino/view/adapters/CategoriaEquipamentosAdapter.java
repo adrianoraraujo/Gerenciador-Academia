@@ -24,9 +24,9 @@ import java.util.List;
  * Created by joaov on 15/07/2017.
  */
 
-public class CategoriaEquipamentosAdapter extends  RecyclerView.Adapter<CategoriaEquipamentosAdapter.EquipamentosPadroesViewHolder>  {
+public class CategoriaEquipamentosAdapter extends RecyclerView.Adapter<CategoriaEquipamentosAdapter.EquipamentosPadroesViewHolder> {
 
-    ArrayList<Equipamento> equipamentos;
+    List<Equipamento> equipamentos;
     Context context;
     RecyclerView recyclerView;
 
@@ -34,7 +34,7 @@ public class CategoriaEquipamentosAdapter extends  RecyclerView.Adapter<Categori
     EquipamentoAdapter categoriaEquipamentosAdapter;
     private String[] categorias;
 
-    public CategoriaEquipamentosAdapter(ArrayList<Equipamento> equipamentos, Context context) {
+    public CategoriaEquipamentosAdapter(List<Equipamento> equipamentos, Context context) {
         this.equipamentos = equipamentos;
         this.context = context;
 
@@ -50,14 +50,12 @@ public class CategoriaEquipamentosAdapter extends  RecyclerView.Adapter<Categori
 
     @Override
     public void onBindViewHolder(final EquipamentosPadroesViewHolder holder, int position) {
+        String categoriaAtual = categorias[position];
 
-        holder.tvNome.setText(categorias[position]);
+        holder.tvNome.setText(categoriaAtual);
         holder.expandableLayout.collapse();
-
         recyclerView = holder.recyclerViewEquipamentos;
-
-
-        setListEquipamentos(recyclerView);
+        setListEquipamentos(recyclerView, categoriaAtual);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,20 +65,28 @@ public class CategoriaEquipamentosAdapter extends  RecyclerView.Adapter<Categori
         });
     }
 
-    private void setListEquipamentos(RecyclerView recyclerView) {
+    private void setListEquipamentos(RecyclerView recyclerView, String categoriaAtual) {
         mLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mLayoutManager);
-        categoriaEquipamentosAdapter = new EquipamentoAdapter(equipamentos, context );
+        List<Equipamento> listaEquipamentosCategoria = getEquipamentosForCategoria(categoriaAtual);
+        categoriaEquipamentosAdapter = new EquipamentoAdapter(listaEquipamentosCategoria, context);
         recyclerView.setAdapter(categoriaEquipamentosAdapter);
+    }
+
+    private List<Equipamento> getEquipamentosForCategoria(String categoriaAtual) {
+        List<Equipamento> listaCategoriaAtual = new ArrayList<>();
+        for(Equipamento e: equipamentos){
+            if(e.getCategoria().equals(categoriaAtual)){
+                listaCategoriaAtual.add(e);
+            }
+        }
+        return listaCategoriaAtual;
     }
 
     @Override
     public int getItemCount() {
-       return categorias.length;
+        return categorias.length;
     }
-
-
-    //HOLDER
 
     protected class EquipamentosPadroesViewHolder extends RecyclerView.ViewHolder {
         ExpandableLayout expandableLayout;

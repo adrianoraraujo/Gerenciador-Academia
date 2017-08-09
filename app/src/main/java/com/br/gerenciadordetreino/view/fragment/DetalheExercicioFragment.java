@@ -1,4 +1,4 @@
-package com.br.gerenciadordetreino.view;
+package com.br.gerenciadordetreino.view.fragment;
 
 import android.support.v4.app.Fragment;
 

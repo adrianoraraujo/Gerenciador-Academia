@@ -1,13 +1,16 @@
-package com.br.gerenciadordetreino.view;
+package com.br.gerenciadordetreino.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
+import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity_;
 import com.br.gerenciadordetreino.view.adapters.CategoriaEquipamentosAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -16,6 +19,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by joaov on 15/07/2017.
@@ -27,7 +31,7 @@ public class CategoriaEquipamentoFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     CategoriaEquipamentosAdapter categoriaEquipamentosAdapter;
-    private ArrayList<Equipamento> equipamentos = new ArrayList();
+    private List<Equipamento> equipamentos = new ArrayList();
 
 
     public static CategoriaEquipamentoFragment newInstance() {
@@ -39,33 +43,27 @@ public class CategoriaEquipamentoFragment extends Fragment {
 
     @AfterViews
     void init() {
-        valuesCategorias();
+        refreshCategorias();
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         categoriaEquipamentosAdapter = new CategoriaEquipamentosAdapter(equipamentos ,getActivity());
         recyclerView.setAdapter(categoriaEquipamentosAdapter);
-
     }
 
-    private void valuesCategorias() {
-        Equipamento e1 = new Equipamento();
-        e1.setNome("Supino com a mao");
-        e1.setCategoria("Ombro");
-        Equipamento e2 = new Equipamento();
-        e2.setNome("Ombro");
-        e2.setCategoria("Ombro");
-        Equipamento e3 = new Equipamento();
-        e3.setNome("fjdawsfjçads");
-        e3.setCategoria("Costas");
-        Equipamento e4 = new Equipamento();
-        e4.setNome("Supino com o pé");
-        e4.setCategoria("Ombro");
-        equipamentos.add(e1);
-        equipamentos.add(e2);
-        equipamentos.add(e3);
-        equipamentos.add(e4);
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(recyclerView != null && categoriaEquipamentosAdapter != null){
+            refreshCategorias();
+        }
+    }
 
-
+    private void refreshCategorias() {
+        if(equipamentos != null && categoriaEquipamentosAdapter != null) {
+            equipamentos.clear();
+            equipamentos.addAll(EquipamentoDAO.getEquipamentos(getActivity()));
+            categoriaEquipamentosAdapter.notifyDataSetChanged();
+        }
     }
 
     @Click(R.id.float_button_add)
