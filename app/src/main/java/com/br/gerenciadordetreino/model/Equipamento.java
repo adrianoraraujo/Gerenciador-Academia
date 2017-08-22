@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by joaov on 15/07/2017.
@@ -28,7 +29,6 @@ public class Equipamento implements Serializable {
     private String observacoes;
     @ColumnInfo(name = "categoria")
     private String categoria;
-
 
     public String getObservacoes() {
         return observacoes;

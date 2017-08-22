@@ -83,7 +83,7 @@
                 android:id="@+id/tv_meus_treinos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/meus_treinos"
+                android:text="@string/historico"
                 android:textColor="@color/branco"
                 android:textSize="20sp" />
 

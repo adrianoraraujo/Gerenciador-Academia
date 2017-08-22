@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
@@ -26,10 +27,11 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Título"
+                android:text="@string/valores_padroes"
                 android:textColor="@color/branco"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -57,10 +59,14 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/picker_text_size" />
 
-                <NumberPicker
-                    android:id="@+id/hour_picker"
+                <com.shawnlin.numberpicker.NumberPicker
+                    app:np_dividerColor="@color/colorPrimary"
+                    app:np_selectedTextColor="@color/colorPrimaryDark"
+                    app:np_textColor="@color/colorPrimaryDark"
+                    app:np_textSize="30sp"
+                    android:id="@+id/repeticoes_picker"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></NumberPicker>
+                    android:layout_height="wrap_content"></com.shawnlin.numberpicker.NumberPicker>
             </LinearLayout>
 
             <LinearLayout
@@ -79,10 +85,14 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/picker_text_size" />
 
-                <NumberPicker
+                <com.shawnlin.numberpicker.NumberPicker
+                    app:np_dividerColor="@color/colorPrimary"
+                    app:np_selectedTextColor="@color/colorPrimaryDark"
+                    app:np_textColor="@color/colorPrimaryDark"
+                    app:np_textSize="30sp"
                     android:id="@+id/series_picker"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></NumberPicker>
+                    android:layout_height="wrap_content"></com.shawnlin.numberpicker.NumberPicker>
 
             </LinearLayout>
 
@@ -101,10 +111,14 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/picker_text_size" />
 
-                <NumberPicker
+                <com.shawnlin.numberpicker.NumberPicker
+                    app:np_dividerColor="@color/colorPrimary"
+                    app:np_selectedTextColor="@color/colorPrimaryDark"
+                    app:np_textColor="@color/colorPrimaryDark"
+                    app:np_textSize="30sp"
                     android:id="@+id/peso_picker"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></NumberPicker>
+                    android:layout_height="wrap_content"></com.shawnlin.numberpicker.NumberPicker>
 
             </LinearLayout>
 
@@ -130,6 +144,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/tv_salvar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"

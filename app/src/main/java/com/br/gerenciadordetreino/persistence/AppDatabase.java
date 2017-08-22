@@ -3,20 +3,26 @@ package com.br.gerenciadordetreino.persistence;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.model.User;
+import com.br.gerenciadordetreino.persistence.converters.Converters;
 import com.br.gerenciadordetreino.persistence.interfaces.EquipamentoPersistence;
+import com.br.gerenciadordetreino.persistence.interfaces.TreinoPersistence;
 import com.br.gerenciadordetreino.persistence.interfaces.UserPersistence;
 
-@Database(entities = {User.class, Equipamento.class}, version = 1)
+@Database(entities = {User.class, Equipamento.class, Treino.class}, version = 2)
+@TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
     public abstract UserPersistence userDao();
     public abstract EquipamentoPersistence equipamentoDao();
+    public abstract TreinoPersistence treinoDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {

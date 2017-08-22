@@ -57,7 +57,7 @@ public class TreinosFragment extends Fragment {
         treinos = new ArrayList<>();
         Treino t1 = new Treino();
         t1.setData(new Date());
-        t1.setEquipamento(equipamento);
+        t1.setIdEquipamento(equipamento.getId());
         t1.setId(1);
         t1.setPeso(20);
         t1.setRepeticoes(3);
@@ -66,7 +66,7 @@ public class TreinosFragment extends Fragment {
 
         Treino t2 = new Treino();
         t2.setData(new Date());
-        t2.setEquipamento(equipamento);
+        t2.setIdEquipamento(equipamento.getId());
         t2.setId(1);
         t2.setPeso(20);
         t2.setRepeticoes(3);

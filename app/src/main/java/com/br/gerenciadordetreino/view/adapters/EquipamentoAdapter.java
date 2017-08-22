@@ -2,9 +2,15 @@ package com.br.gerenciadordetreino.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,11 +21,18 @@ import android.widget.TextView;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.model.Treino;
+import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
+import com.br.gerenciadordetreino.utils.PhotoUtils;
+import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity;
 import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity_;
+import com.br.gerenciadordetreino.view.CadastroTreinoActivity;
 import com.br.gerenciadordetreino.view.CadastroTreinoActivity_;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.meetic.marypopup.MaryPopup;
 
+import java.io.FileNotFoundException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +40,12 @@ import java.util.List;
  */
 
 public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.EquipamentosViewHolder> {
+    private static final int COLOR_OTIMO = 3;
+    private static final int COLOR_BOM = 7;
+    private static final int COLOR_MEDIO = 15;
+    private static final int COLOR_RUIM = 30;
+
+
     List<Equipamento> equipamentos;
     Context context;
 
@@ -44,7 +63,10 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
     @Override
     public void onBindViewHolder(final EquipamentosViewHolder holder, int position) {
         Equipamento item = equipamentos.get(position);
-        setClicks(holder, item);
+
+        setColorBackground(holder, item);
+        setClicks(holder, item, position);
+        setPhotoInView(item, holder.circularImageView);
 
         holder.tvTitle.setText(item.getNome());
         holder.tvRepeticao.setText(String.valueOf(item.getRepeticoesDefault()));
@@ -52,13 +74,63 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
         holder.tvSerie.setText(String.valueOf(item.getSeriesDefault()));
     }
 
-    private void setClicks(final EquipamentosViewHolder holder, Equipamento item) {
+    private void setColorBackground(EquipamentosViewHolder holder, Equipamento item) {
+        Date dataAtual = new Date();
+        Treino treino = new Treino();
+        treino.setData(new Date());
+        Treino ultimoItem =treino; //item.getTrenios().get(item.getTrenios().size());
+        Date dataUltimaApresentacao = ultimoItem.getData();
+        int diasPassados = (int) (dataAtual.getTime() - dataUltimaApresentacao.getTime());
+
+        if(diasPassados <= COLOR_OTIMO) {
+            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.otimo));
+        }else if(diasPassados <= COLOR_BOM){
+            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.bom));
+        }else if(diasPassados <= COLOR_MEDIO){
+            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.medio));
+        }else if(diasPassados <= COLOR_RUIM){
+            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.ruim));
+        }else if(diasPassados > COLOR_RUIM)
+            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.pessimo));
+
+    }
+
+    private void setClicks(final EquipamentosViewHolder holder, final Equipamento item, final int position) {
         holder.imgEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, CadastroEquipamentoActivity_.class));
+                Intent intent = new Intent(context, CadastroEquipamentoActivity_.class);
+                intent.putExtra(CadastroEquipamentoActivity.EQUIPAMENTO, item);
+                ((AppCompatActivity) context).setResult(CadastroTreinoActivity.CODE_EDICAO);
+                ((AppCompatActivity) context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 
+            }
+        });
+
+        holder.imgExcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, R.style.AppDialogStyle);
+                alertDialog.setTitle("Alerta !");
+                alertDialog.setMessage("Tem certeza que deseja excluir \n"+item.getNome()+" ?");
+                alertDialog.setCancelable(false);
+                alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EquipamentoDAO.deleteEquipamento(context, item);
+                        equipamentos.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+
+                alertDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                alertDialog.show();
             }
         });
 
@@ -66,6 +138,12 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             @Override
             public void onClick(View v) {
                 View view = LayoutInflater.from(context).inflate(R.layout.popup_imagem, null, false);
+                ImageView imgCentral = (ImageView) view.findViewById(R.id.image_view);
+                BitmapDrawable drawable = (BitmapDrawable) holder.circularImageView.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                Bitmap bitmapEscaled = Bitmap.createScaledBitmap(bitmap, 600, 600, true);
+                imgCentral.setImageBitmap(bitmapEscaled);
+
                 MaryPopup marypopup = MaryPopup.with((Activity) context)
                         .cancellable(true)
                         .blackOverlayColor(Color.parseColor("#DD444444"))
@@ -81,7 +159,11 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
         holder.cardBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, CadastroTreinoActivity_.class));
+                Intent intent = new Intent(context, CadastroTreinoActivity_.class);
+                intent.putExtra(CadastroTreinoActivity.TITULO, "Malhar Agora !");
+                intent.putExtra(CadastroTreinoActivity.CATEGORIA_ITEM, item);
+                intent.putExtra(CadastroTreinoActivity.IS_MALHACAO, true);
+                ((AppCompatActivity)context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 
             }
@@ -101,6 +183,7 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
         TextView tvSerie;
         CardView cardBody;
         ImageView imgEditar;
+        ImageView imgExcluir;
 
         public EquipamentosViewHolder(View itemView) {
             super(itemView);
@@ -112,7 +195,23 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             tvPeso = (TextView) itemView.findViewById(R.id.tv_peso);
             tvRepeticao = (TextView) itemView.findViewById(R.id.tv_repeticao);
             tvSerie = (TextView) itemView.findViewById(R.id.tv_series);
+            imgExcluir = (ImageView) itemView.findViewById(R.id.img_excluir);
 
         }
+    }
+
+    private void setPhotoInView(Equipamento equipamento, CircularImageView circularImageView) {
+        Bitmap bitmap = null;
+        if (equipamento.getFoto() != null) {
+            try {
+                bitmap = PhotoUtils.getImage(context, equipamento.getFoto());
+                if (bitmap != null) {
+                    circularImageView.setImageBitmap(bitmap);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

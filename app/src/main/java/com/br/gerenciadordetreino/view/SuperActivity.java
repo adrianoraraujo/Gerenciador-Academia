@@ -22,25 +22,25 @@ class SuperActivity extends AppCompatActivity{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        Log.i("CICLO_DE_VIDA","onCreate");
+        Log.i("________CICLO_DE_VIDA","onCreate________");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("CICLO_DE_VIDA","onDestroy");
+        Log.i("________CICLO_DE_VIDA","onDestroy________");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("CICLO_DE_VIDA","onResume");
+        Log.i("________CICLO_DE_VIDA","onResume________");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("CICLO_DE_VIDA","onPause");
+        Log.i("________ CICLO_DE_VIDA","onPause _________");
     }
 
 

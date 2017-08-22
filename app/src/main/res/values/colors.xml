@@ -8,4 +8,12 @@
     <color name="azul_claro">#5F72EB</color>
     <color name="azul_claro_2">#7094C8</color>
     <color name="pataFilhoteElefante">#f9f4f4</color>
+
+    <!--Cores para satatys-->
+    <color name="otimo">#730bec29</color>
+    <color name="bom">#739cfa7c</color>
+    <color name="medio">#73faf32f</color>
+    <color name="ruim">#73fca5a5</color>
+    <color name="pessimo">#73ef0606</color>
+
 </resources>

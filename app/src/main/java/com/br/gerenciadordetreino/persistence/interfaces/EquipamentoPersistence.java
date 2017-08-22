@@ -20,8 +20,8 @@ public  interface EquipamentoPersistence {
     @Query("SELECT * FROM equipamento")
     List<Equipamento> getAllEquipamentos();
 
-    @Query("SELECT * FROM equipamento where id LIKE  :nome")
-    Equipamento findByNameEquipamento(String nome);
+    @Query("SELECT * FROM equipamento where id = :id")
+    Equipamento findById(int id);
 
     @Query("SELECT COUNT(*) from equipamento")
     int countEquipamentos();

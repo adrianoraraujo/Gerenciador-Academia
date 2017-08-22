@@ -23,14 +23,14 @@ public class Treino implements Serializable {
     @ColumnInfo(name = "data")
     private Date data;
     @ColumnInfo(name = "idEquipamento")
-    private Equipamento equipamento;
+    private int idEquipamento;
 
-    public Equipamento getEquipamento() {
-        return equipamento;
+    public int getIdEquipamento() {
+        return idEquipamento;
     }
 
-    public void setEquipamento(Equipamento equipamento) {
-        this.equipamento = equipamento;
+    public void setIdEquipamento(int idEquipamento) {
+        this.idEquipamento = idEquipamento;
     }
 
     public int getId() {

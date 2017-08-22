@@ -42,6 +42,7 @@
                     android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <LinearLayout
+                        android:id="@+id/ll_editar_foto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -71,6 +72,7 @@
 
                         <EditText
                             android:id="@+id/edt_name"
+                            android:lines="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_bottom_cadastro_exercicio"
@@ -217,9 +219,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/transparent"
                     android:hint="Observações"
-                    android:minHeight="90dp"
+                    android:minHeight="110dp"
                     android:textColor="#000"
-                    android:layout_marginBottom="15dp"
                     android:textColorHint="#000" />
 
             </android.support.v7.widget.CardView>
