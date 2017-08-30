@@ -99,6 +99,13 @@ public class DateUtils {
         return (dateMonth==thisMonth) && (dateYear==thisYear) && (dateDay==thisDay);
     }
 
+    public static long diferenceDays(Date maior, Date menor){
+
+        long DAY = 24L * 60L * 60L * 1000L;
+        long diasPassados = (( maior.getTime() - menor.getTime() ) / DAY );
+        return  diasPassados;
+    }
+
     public static Date initDate(Date date){
         Calendar firstDay = Calendar.getInstance();
         firstDay.setTime(date);
@@ -115,6 +122,13 @@ public class DateUtils {
         return lastDay.getTime();
     }
 
+    public static int getDayWeek(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        return dayWeek;
+    }
+
     public static Date addMonth(Date date){
         return addWithCalendar(date, Calendar.MONTH,1);
     }
@@ -129,4 +143,38 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static int getDayOfMonth(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        return  dayMonth;
+    }
+
+    public static int getDayMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayMonth = calendar.get(Calendar.DAY_OF_WEEK);
+        return dayMonth;
+    }
+
+    public static int getMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int month = calendar.get(Calendar.MONTH) +1;
+        return month;
+    }
+
+    public static int getWeekOfYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int month = calendar.get(Calendar.WEEK_OF_YEAR);
+        return month;
+    }
+
+    public static int getYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        return year;
+    }
 }

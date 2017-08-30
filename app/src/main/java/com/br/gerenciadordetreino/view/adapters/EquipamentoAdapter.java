@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,8 +20,8 @@ import android.widget.TextView;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
-import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
+import com.br.gerenciadordetreino.utils.DateUtils;
 import com.br.gerenciadordetreino.utils.PhotoUtils;
 import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity;
 import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity_;
@@ -76,11 +75,8 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
 
     private void setColorBackground(EquipamentosViewHolder holder, Equipamento item) {
         Date dataAtual = new Date();
-        Treino treino = new Treino();
-        treino.setData(new Date());
-        Treino ultimoItem =treino; //item.getTrenios().get(item.getTrenios().size());
-        Date dataUltimaApresentacao = ultimoItem.getData();
-        int diasPassados = (int) (dataAtual.getTime() - dataUltimaApresentacao.getTime());
+        Date dataUlitmaMalhada = item.getUltimaDataMalhada();
+        long diasPassados = DateUtils.diferenceDays(dataAtual, dataUlitmaMalhada);
 
         if(diasPassados <= COLOR_OTIMO) {
             holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.otimo));
@@ -101,10 +97,9 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             public void onClick(View v) {
                 Intent intent = new Intent(context, CadastroEquipamentoActivity_.class);
                 intent.putExtra(CadastroEquipamentoActivity.EQUIPAMENTO, item);
-                ((AppCompatActivity) context).setResult(CadastroTreinoActivity.CODE_EDICAO);
+                intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.EDITAR_VALORES_PADROES);
                 ((AppCompatActivity) context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
-
             }
         });
 
@@ -161,8 +156,8 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             public void onClick(View v) {
                 Intent intent = new Intent(context, CadastroTreinoActivity_.class);
                 intent.putExtra(CadastroTreinoActivity.TITULO, "Malhar Agora !");
-                intent.putExtra(CadastroTreinoActivity.CATEGORIA_ITEM, item);
-                intent.putExtra(CadastroTreinoActivity.IS_MALHACAO, true);
+                intent.putExtra(CadastroTreinoActivity.EQUIPAMENTO_ITEM, item);
+                intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.MALHAR);
                 ((AppCompatActivity)context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 

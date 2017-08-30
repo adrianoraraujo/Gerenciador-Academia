@@ -14,7 +14,7 @@ import com.br.gerenciadordetreino.persistence.interfaces.EquipamentoPersistence;
 import com.br.gerenciadordetreino.persistence.interfaces.TreinoPersistence;
 import com.br.gerenciadordetreino.persistence.interfaces.UserPersistence;
 
-@Database(entities = {User.class, Equipamento.class, Treino.class}, version = 2)
+@Database(entities = {User.class, Equipamento.class, Treino.class}, version = 5)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

@@ -14,6 +14,32 @@
     <string name="historico">Histórico de treinos</string>
     <string name="valores_padroes">Valores Padrões</string>
 
+
+    <string-array name="diasSemana">
+        <item>Seg</item>
+        <item>Ter</item>
+        <item>Qua</item>
+        <item>Quin</item>
+        <item>Sex</item>
+        <item>Sab</item>
+        <item>Dom</item>
+    </string-array>
+
+    <string-array name="meses">
+        <item>Jan</item>
+        <item>Fev</item>
+        <item>Mar</item>
+        <item>Abr</item>
+        <item>Mai</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Ago</item>
+        <item>Set</item>
+        <item>Out</item>
+        <item>Nov</item>
+        <item>Dez</item>
+    </string-array>
+
     <string-array name="categorias">
         <item>Abdomên</item>
         <item>Peito</item>

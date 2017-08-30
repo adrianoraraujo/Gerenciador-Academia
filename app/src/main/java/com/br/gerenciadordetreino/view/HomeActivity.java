@@ -32,7 +32,6 @@ public class HomeActivity extends SuperActivity {
 
     @ViewById
     LinearLayout container;
-
     private DrawerLayout drawer;
 
     //TODO ler esse tutorial http://www.android4devs.com/2014/12/how-to-make-material-design-navigation-drawer.html
@@ -42,6 +41,7 @@ public class HomeActivity extends SuperActivity {
     public void initiViews() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.id_toolbar);
         setSupportActionBar(toolbar);
+        setTextToolbar("MEUS EXERCÍCIOS");
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null,R.string.navigation_drawer_open,R.string.navigation_drawer_close) {
             //QUANDO ABRIR O MENU LATERAL

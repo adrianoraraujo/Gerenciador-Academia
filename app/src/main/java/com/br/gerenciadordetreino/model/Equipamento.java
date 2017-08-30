@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ public class Equipamento implements Serializable {
     private String observacoes;
     @ColumnInfo(name = "categoria")
     private String categoria;
+    @ColumnInfo(name = "ultimoDiaMalhado")
+    private Date ultimaDataMalhada;
 
     public String getObservacoes() {
         return observacoes;
@@ -92,5 +95,13 @@ public class Equipamento implements Serializable {
 
     public void setSeriesDefault(int seriesDefault) {
         this.seriesDefault = seriesDefault;
+    }
+
+    public Date getUltimaDataMalhada() {
+        return ultimaDataMalhada;
+    }
+
+    public void setUltimaDataMalhada(Date ultimaDataMalhada) {
+        this.ultimaDataMalhada = ultimaDataMalhada;
     }
 }

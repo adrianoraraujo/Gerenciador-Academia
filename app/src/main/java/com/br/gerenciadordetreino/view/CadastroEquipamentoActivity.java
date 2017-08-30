@@ -28,7 +28,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -37,7 +36,6 @@ public class CadastroEquipamentoActivity extends SuperActivity {
 
     public static final String EQUIPAMENTO = "Equipamento";
     public static final int CODE_CAMERA = 30;
-    public static final int PERMISSION_READ_STORAGE = 2;
 
     @ViewById(R.id.spinner_categorias)
     AppCompatSpinner spnCategorias;
@@ -62,11 +60,12 @@ public class CadastroEquipamentoActivity extends SuperActivity {
 
     @Extra(EQUIPAMENTO)
     Equipamento equipamento;
+
     private Bitmap image;
 
     @AfterViews
     void init() {
-        if(equipamento == null){
+        if (equipamento == null) {
             equipamento = new Equipamento();
         }
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -107,7 +106,8 @@ public class CadastroEquipamentoActivity extends SuperActivity {
         }
         Intent intent = new Intent(CadastroEquipamentoActivity.this, CadastroTreinoActivity_.class);
         intent.putExtra(CadastroTreinoActivity.TITULO, "Valores Padrões");
-        intent.putExtra(CadastroTreinoActivity.CATEGORIA_ITEM, equipamento);
+        intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.CADASTRO_OU_EDITAR);
+        intent.putExtra(CadastroTreinoActivity.EQUIPAMENTO_ITEM, equipamento);
         startActivityForResult(intent, CadastroTreinoActivity.CODE_PARAMETROS_EQUIPAMENTO);
     }
 
@@ -160,8 +160,8 @@ public class CadastroEquipamentoActivity extends SuperActivity {
 
     private String getNomePath() {
         Date date = DateUtils.today();
-        String dataFormatada = DateUtils.toString("yyyy-MM-dd", date);
-        String nomePath =  dataFormatada+" _ " + equipamento.getId();
+        String dataFormatada = DateUtils.toString("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", date);
+        String nomePath = dataFormatada;
         return nomePath;
     }
 
@@ -206,6 +206,7 @@ public class CadastroEquipamentoActivity extends SuperActivity {
         equipamento.setRepeticoesDefault(repeticao);
         equipamento.setSeriesDefault(series);
         equipamento.setObservacoes(observacoes);
+        equipamento.setUltimaDataMalhada(new Date());
 
         savePhotoInMemory();
     }

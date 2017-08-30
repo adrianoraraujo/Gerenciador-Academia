@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
@@ -71,4 +72,5 @@ public class CategoriaEquipamentoFragment extends Fragment {
         startActivity(new Intent(getContext(), CadastroEquipamentoActivity_.class));
         getActivity().overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
     }
+
 }

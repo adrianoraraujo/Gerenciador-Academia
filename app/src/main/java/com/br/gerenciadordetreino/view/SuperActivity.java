@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.br.gerenciadordetreino.R;
 
@@ -41,6 +42,11 @@ class SuperActivity extends AppCompatActivity{
     protected void onPause() {
         super.onPause();
         Log.i("________ CICLO_DE_VIDA","onPause _________");
+    }
+
+    void setTextToolbar(String text){
+        TextView title = (TextView) findViewById(R.id.toolbar_title);
+        title.setText(text);
     }
 
 

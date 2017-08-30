@@ -14,6 +14,8 @@ import java.util.Date;
 public class Treino implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "nome")
+    private String nome;
     @ColumnInfo(name = "serie")
     private int serie;
     @ColumnInfo(name = "repeticoes")
@@ -24,6 +26,24 @@ public class Treino implements Serializable {
     private Date data;
     @ColumnInfo(name = "idEquipamento")
     private int idEquipamento;
+    @ColumnInfo(name = "categoria")
+    private String categoria;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
     public int getIdEquipamento() {
         return idEquipamento;
