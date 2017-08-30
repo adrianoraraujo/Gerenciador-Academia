@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.utils.DateUtils;
-import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity_;
 import com.br.gerenciadordetreino.view.CadastroTreinoActivity;
 import com.br.gerenciadordetreino.view.CadastroTreinoActivity_;
 
@@ -43,7 +42,7 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
 
     @Override
     public void onBindViewHolder(TreinoHolder holder, int position) {
-        Treino item = treinos.get(position);
+        final Treino item = treinos.get(position);
         setTitulo(holder, item);
         setValuesInViews(holder, item);
 
@@ -51,9 +50,10 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
         holder.body.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, CadastroTreinoActivity_.class));
-                Intent intent = new Intent(context, CadastroEquipamentoActivity_.class);
-                intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.EDITAR_VALORES_PADROES);
+                Intent intent = new Intent(context, CadastroTreinoActivity_.class);
+                intent.putExtra(CadastroTreinoActivity.TITULO, "Editar Treino\n"+DateUtils.toString("dd/MM",item.getData()));
+                intent.putExtra(CadastroTreinoActivity.TREINO_ITEM,item );
+                intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.EDITAR_TREINO_PASSADO);
                 context.startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 
@@ -66,10 +66,10 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
         Resources res = context.getResources();
         String semanas[] = res.getStringArray(R.array.diasSemana);
 
-        int diaMes = DateUtils.getMonth(item.getData());
+        int diaMes = DateUtils.getDayMonth(item.getData()) + 1;
 
         holder.tvNome.setText(item.getNome());
-        holder.tvDiaSemana.setText(semanas[diaMes-1]);
+        holder.tvDiaSemana.setText(semanas[diaMes - 1]);
         holder.tvDiaMes.setText(String.valueOf(DateUtils.getDayOfMonth(item.getData())));
         holder.tvCategoria.setText(item.getCategoria());
         holder.tvKilos.setText(String.valueOf(item.getPeso()));
@@ -78,9 +78,9 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
     }
 
     private void setTitulo(TreinoHolder holder, Treino item) {
-        if(item.getCategoria().equalsIgnoreCase(title)){
+        if (item.getCategoria().equalsIgnoreCase(title)) {
             holder.tvCategoria.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.tvCategoria.setVisibility(View.VISIBLE);
         }
         title = item.getCategoria();

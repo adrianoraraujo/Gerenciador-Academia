@@ -79,25 +79,24 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
         long diasPassados = DateUtils.diferenceDays(dataAtual, dataUlitmaMalhada);
 
         if(diasPassados <= COLOR_OTIMO) {
-            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.otimo));
+            holder.circularImageView.setBorderColor(ContextCompat.getColor(context, R.color.otimo));
         }else if(diasPassados <= COLOR_BOM){
-            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.bom));
+            holder.circularImageView.setBorderColor(ContextCompat.getColor(context, R.color.bom));
         }else if(diasPassados <= COLOR_MEDIO){
-            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.medio));
+            holder.circularImageView.setBorderColor(ContextCompat.getColor(context, R.color.medio));
         }else if(diasPassados <= COLOR_RUIM){
-            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.ruim));
+            holder.circularImageView.setBorderColor(ContextCompat.getColor(context, R.color.ruim));
         }else if(diasPassados > COLOR_RUIM)
-            holder.cardBody.setBackgroundColor(ContextCompat.getColor(context, R.color.pessimo));
+            holder.circularImageView.setBorderColor(ContextCompat.getColor(context, R.color.pessimo));
 
     }
 
-    private void setClicks(final EquipamentosViewHolder holder, final Equipamento item, final int position) {
+    private void setClicks(final EquipamentosViewHolder holder, final Equipamento equipamento, final int position) {
         holder.imgEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CadastroEquipamentoActivity_.class);
-                intent.putExtra(CadastroEquipamentoActivity.EQUIPAMENTO, item);
-                intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.EDITAR_VALORES_PADROES);
+                intent.putExtra(CadastroEquipamentoActivity.EQUIPAMENTO, equipamento);
                 ((AppCompatActivity) context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
             }
@@ -108,12 +107,12 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             public void onClick(View v) {
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, R.style.AppDialogStyle);
                 alertDialog.setTitle("Alerta !");
-                alertDialog.setMessage("Tem certeza que deseja excluir \n"+item.getNome()+" ?");
+                alertDialog.setMessage("Tem certeza que deseja excluir \n"+equipamento.getNome()+" ?");
                 alertDialog.setCancelable(false);
                 alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        EquipamentoDAO.deleteEquipamento(context, item);
+                        EquipamentoDAO.deleteEquipamento(context, equipamento);
                         equipamentos.remove(position);
                         notifyDataSetChanged();
                     }
@@ -156,7 +155,7 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             public void onClick(View v) {
                 Intent intent = new Intent(context, CadastroTreinoActivity_.class);
                 intent.putExtra(CadastroTreinoActivity.TITULO, "Malhar Agora !");
-                intent.putExtra(CadastroTreinoActivity.EQUIPAMENTO_ITEM, item);
+                intent.putExtra(CadastroTreinoActivity.EQUIPAMENTO_ITEM, equipamento);
                 intent.putExtra(CadastroTreinoActivity.CODE_ACAO, CadastroTreinoActivity.MALHAR);
                 ((AppCompatActivity)context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);

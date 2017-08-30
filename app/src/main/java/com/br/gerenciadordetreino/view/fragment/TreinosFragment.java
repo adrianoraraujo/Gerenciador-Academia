@@ -10,10 +10,12 @@ import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.persistence.TreinoDAO;
 import com.br.gerenciadordetreino.utils.DateUtils;
 import com.br.gerenciadordetreino.view.adapters.ExercicioAdapter;
+import com.br.gerenciadordetreino.view.custom.SelecionadorData;
 import com.br.gerenciadordetreino.view.ordenacao.TreinosSort;
 
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.joda.time.DateTime;
@@ -33,9 +35,12 @@ public class TreinosFragment extends Fragment {
     RecyclerView recyclerView;
     @ViewById(R.id.weekCalendar)
     WeekCalendar weekCalendar;
+    @ViewById(R.id.id_selecionador_data)
+    SelecionadorData selecionadorData;
 
     List<Treino> treinos =new ArrayList<>();
     ExercicioAdapter treinosAdapter;
+    DateTime dataSelecionada;
 
     public static TreinosFragment newInstance() {
         Bundle args = new Bundle();
@@ -47,15 +52,27 @@ public class TreinosFragment extends Fragment {
     @AfterViews
     void initView() {
         initValues();
-        refreshList(DateTime.now());
+        if(dataSelecionada == null) {
+            dataSelecionada = DateTime.now();
+            refreshList();
+        }
 
 
     }
 
-    private void refreshList(DateTime dateTime) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(recyclerView != null && treinosAdapter != null){
+            refreshList();
+        }
+    }
+
+    private void refreshList() {
+        refreshTreinos();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
-        treinosAdapter = new ExercicioAdapter(getTreinosWeek(getDateView(dateTime)), getActivity());
+        treinosAdapter = new ExercicioAdapter(getTreinosWeek(dataSelecionada.toDate()), getActivity());
         recyclerView.setAdapter(treinosAdapter);
     }
 
@@ -72,14 +89,13 @@ public class TreinosFragment extends Fragment {
     }
 
     private void initValues() {
-        treinos = TreinoDAO.getTreinos(getActivity());
-        TreinosSort treinosSort = new TreinosSort();
-        Collections.sort(treinos, treinosSort);
+        selecionadorData.goToday();
 
         weekCalendar.setOnWeekChangeListener(new OnWeekChangeListener() {
             @Override
             public void onWeekChange(DateTime firstDayOfTheWeek, boolean forward) {
-                refreshList(firstDayOfTheWeek);
+                dataSelecionada = firstDayOfTheWeek;
+                refreshList();
             }
         });
 
@@ -89,6 +105,12 @@ public class TreinosFragment extends Fragment {
                 movePositionList(dateTime);
             }
         });
+    }
+
+    private void refreshTreinos() {
+        treinos = TreinoDAO.getTreinos(getActivity());
+        TreinosSort treinosSort = new TreinosSort();
+        Collections.sort(treinos, treinosSort);
     }
 
     void movePositionList(DateTime dateTime){
@@ -104,8 +126,14 @@ public class TreinosFragment extends Fragment {
         }
     }
 
-    private Date getDateView(DateTime dateTime) {
-        return dateTime.toDate();
+    @Click(R.id.ic_direita)
+    void goNext(){
+        selecionadorData.goNext();
+    }
+
+    @Click(R.id.ic_esquerda)
+    void goLeft(){
+        selecionadorData.goBack();
     }
 
 }
