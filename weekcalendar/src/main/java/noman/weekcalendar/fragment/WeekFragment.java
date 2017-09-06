@@ -157,7 +157,8 @@ public class WeekFragment extends Fragment {
                 firstDay = getItem(0);
             }
 
-            DateTime dateTime = getItem(position).withMillisOfDay(0);
+            //Mexi aqui
+            DateTime dateTime = getItem(position);
 
             TextView dayTextView = (TextView) convertView.findViewById(R.id.daytext);
             dayTextView.setText(String.valueOf(dateTime.getDayOfMonth()));

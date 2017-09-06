@@ -161,8 +161,7 @@ public class CadastroEquipamentoActivity extends SuperActivity {
     private String getNomePath() {
         Date date = DateUtils.today();
         String dataFormatada = DateUtils.toString("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", date);
-        String nomePath = dataFormatada;
-        return nomePath;
+        return  dataFormatada;
     }
 
 

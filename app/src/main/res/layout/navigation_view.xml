@@ -23,16 +23,20 @@
             android:orientation="vertical">
 
             <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/img_usuario"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@mipmap/casal"
                 app:siBorderColor="#fff" />
 
             <TextView
+                android:id="@+id/tv_nome_usuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="JOÃO FELIPE"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text=""
                 android:textColor="@color/branco" />
 
         </LinearLayout>
@@ -84,6 +88,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/historico"
+                android:textColor="@color/branco"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left|center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/meus_treinos" />
+
+            <TextView
+                android:id="@+id/tv_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfil"
                 android:textColor="@color/branco"
                 android:textSize="20sp" />
 

@@ -13,6 +13,7 @@
     <string name="meus_treinos">Meus Treinos</string>
     <string name="historico">Histórico de treinos</string>
     <string name="valores_padroes">Valores Padrões</string>
+    <string name="perfil">Perfil</string>
 
 
     <string-array name="diasSemana">
