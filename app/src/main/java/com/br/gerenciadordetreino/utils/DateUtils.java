@@ -20,50 +20,54 @@ public class DateUtils {
         return simpleDateFormat.parse(dateToParse);
     }
 
-    public static Date toDateAndZeroSeconds(Long timestamp){
+    public static Date toDateAndZeroSeconds(Long timestamp) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(timestamp));
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
 
-    public static Date today(){
+    public static Date today() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
         return calendar.getTime();
     }
-    public static String toString(String format, Date dateToParse){
-        return toString(format,dateToParse,"");
+
+    public static String toString(String format, Date dateToParse) {
+        return toString(format, dateToParse, "");
     }
-    public static String toString(String format, Date dateToParse, String defaultVale){
+
+    public static String toString(String format, Date dateToParse, String defaultVale) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-03:00"));
             return simpleDateFormat.format(dateToParse);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return defaultVale;
     }
 
     public static Date toDate(String format, String dateToParse, TimeZone timeZone) throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-        if(timeZone!=null) {
+        if (timeZone != null) {
             simpleDateFormat.setTimeZone(timeZone);
         }
         return simpleDateFormat.parse(dateToParse);
     }
 
-    public static String toString(String format, Date dateToParse, TimeZone timeZone){
+    public static String toString(String format, Date dateToParse, TimeZone timeZone) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-            if(timeZone!=null) {
+            if (timeZone != null) {
                 simpleDateFormat.setTimeZone(timeZone);
             }
             return simpleDateFormat.format(dateToParse);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return "";
     }
 
@@ -75,7 +79,7 @@ public class DateUtils {
 //        return months[mes];
 //    }
 
-    public static boolean isThisMonth(Date date){
+    public static boolean isThisMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));
         int thisMonth = calendar.get(Calendar.MONTH);
@@ -83,10 +87,10 @@ public class DateUtils {
         calendar.setTime(date);
         int dateMonth = calendar.get(Calendar.MONTH);
         int dateYear = calendar.get(Calendar.YEAR);
-        return (dateMonth==thisMonth) && (dateYear==thisYear);
+        return (dateMonth == thisMonth) && (dateYear == thisYear);
     }
 
-    public static boolean isThisDay(Date date){
+    public static boolean isThisDay(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));
         int thisMonth = calendar.get(Calendar.MONTH);
@@ -96,24 +100,24 @@ public class DateUtils {
         int dateMonth = calendar.get(Calendar.MONTH);
         int dateYear = calendar.get(Calendar.YEAR);
         int dateDay = calendar.get(Calendar.DAY_OF_MONTH);
-        return (dateMonth==thisMonth) && (dateYear==thisYear) && (dateDay==thisDay);
+        return (dateMonth == thisMonth) && (dateYear == thisYear) && (dateDay == thisDay);
     }
 
-    public static long diferenceDays(Date maior, Date menor){
+    public static long diferenceDays(Date maior, Date menor) {
 
         long DAY = 24L * 60L * 60L * 1000L;
-        long diasPassados = (( maior.getTime() - menor.getTime() ) / DAY );
-        return  diasPassados;
+        long diasPassados = ((maior.getTime() - menor.getTime()) / DAY);
+        return diasPassados;
     }
 
-    public static Date initDate(Date date){
+    public static Date initDate(Date date) {
         Calendar firstDay = Calendar.getInstance();
         firstDay.setTime(date);
         firstDay.set(Calendar.DAY_OF_MONTH, 1);
-        return  firstDay.getTime();
+        return firstDay.getTime();
     }
 
-    public static Date finalDate(Date date){
+    public static Date finalDate(Date date) {
         Calendar lastDay = Calendar.getInstance();
         lastDay.setTime(date);
         lastDay.add(Calendar.MONTH, 1);
@@ -122,32 +126,33 @@ public class DateUtils {
         return lastDay.getTime();
     }
 
-    public static int getDayWeek(Date date){
+    public static int getDayWeek(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int dayWeek = calendar.get(Calendar.DAY_OF_WEEK);
         return dayWeek;
     }
 
-    public static Date addMonth(Date date){
-        return addWithCalendar(date, Calendar.MONTH,1);
-    }
-    public static Date subtractMonth(Date date){
-        return addWithCalendar(date, Calendar.MONTH,-1);
+    public static Date addMonth(Date date) {
+        return addWithCalendar(date, Calendar.MONTH, 1);
     }
 
-    private static Date addWithCalendar(Date date, int field, int value){
+    public static Date subtractMonth(Date date) {
+        return addWithCalendar(date, Calendar.MONTH, -1);
+    }
+
+    private static Date addWithCalendar(Date date, int field, int value) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(field,value);
+        calendar.add(field, value);
         return calendar.getTime();
     }
 
-    public static int getDayOfMonth(Date date){
+    public static int getDayOfMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int dayMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        return  dayMonth;
+        return dayMonth;
     }
 
     public static int getDayMonth(Date date) {
@@ -160,7 +165,7 @@ public class DateUtils {
     public static int getMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        int month = calendar.get(Calendar.MONTH) +1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         return month;
     }
 
@@ -176,5 +181,24 @@ public class DateUtils {
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         return year;
+    }
+
+    public static Date getPrimeiroDiaSemana(Date data) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(data);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        return calendar.getTime();
+    }
+
+    public static Date getUltimoDiaSemana(Date data) {
+        Date primeiroDia = getPrimeiroDiaSemana(data);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(primeiroDia);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.add(Calendar.DATE, 7);
+        return calendar.getTime();
     }
 }

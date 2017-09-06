@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.Treino;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +20,9 @@ import java.util.List;
 public  interface TreinoPersistence {
     @Query("SELECT * FROM Treino")
     List<Treino> getAllTreinos();
+
+    @Query("SELECT * FROM Treino where data > :dataInicial and data < :dataFinal  ")
+    List<Treino> getTreinosSemana(Date dataInicial, Date dataFinal);
 
     @Query("SELECT * FROM Treino where id = :id")
     Treino findById(int id);

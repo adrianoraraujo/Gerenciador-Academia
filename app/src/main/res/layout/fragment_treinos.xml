@@ -18,13 +18,14 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/ic_esquerda"
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
-            android:src="@mipmap/ic_esquerda"
+            android:src="@mipmap/ic_esq"
             android:tint="@color/azul_claro" />
 
         <com.br.gerenciadordetreino.view.custom.SelecionadorData
@@ -37,13 +38,14 @@
             android:layout_height="wrap_content"></com.br.gerenciadordetreino.view.custom.SelecionadorData>
 
         <ImageView
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:layout_centerVertical="true"
             android:id="@+id/ic_direita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_direita"
+            android:src="@mipmap/ic_dir"
             android:tint="@color/azul_claro" />
     </RelativeLayout>
 
@@ -55,6 +57,16 @@
         app:daysBackgroundColor="@color/colorPrimaryDark"
         app:todaysDateBgColor="@color/colorPrimary"
         app:weekBackgroundColor="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/tv_vazio"
+        android:visibility="gone"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Você não treinou \nesta semana"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_treinos"

@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.utils.DateUtils;
 
+import org.joda.time.DateTime;
+
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -24,9 +27,11 @@ public class SelecionadorData extends LinearLayout {
     ImageView tvSetaEsquerda;
     ImageView tvSetaDireita;
     TextView tvTextData;
+    private Date data;
     private Context context;
     private int mes;
     private int ano;
+    private Date dateSelected;
 
     public SelecionadorData(Context context) {
         super(context);
@@ -67,10 +72,20 @@ public class SelecionadorData extends LinearLayout {
     }
 
     public void goToday(){
-        Date hoje = DateUtils.today();
-        mes = DateUtils.getMonth(hoje);
-        ano = DateUtils.getYear(hoje);
+        dateSelected = DateUtils.today();
+        mes = DateUtils.getMonth(dateSelected);
+        ano = DateUtils.getYear(dateSelected);
         String mesAno = getDataFormatada();
+
+        tvTextData.setText(mesAno);
+    }
+
+    public void setDate(Date date){
+        dateSelected = date;
+        mes = DateUtils.getMonth(dateSelected);
+        ano = DateUtils.getYear(dateSelected);
+        String mesAno = getDataFormatada();
+
         tvTextData.setText(mesAno);
     }
 
@@ -83,6 +98,7 @@ public class SelecionadorData extends LinearLayout {
        }
        String mesAno = getDataFormatada();
        tvTextData.setText(mesAno);
+       refreshDate();
 
    }
 
@@ -95,5 +111,19 @@ public class SelecionadorData extends LinearLayout {
         }
         String mesAno = getDataFormatada();
         tvTextData.setText(mesAno);
+        refreshDate();
+    }
+
+    private void refreshDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateSelected);
+        calendar.set(Calendar.MONTH, mes);
+        calendar.set(Calendar.YEAR, ano);
+
+    }
+
+    public DateTime getDateSelected() {
+        DateTime dateTime = new DateTime(dateSelected);
+        return dateTime;
     }
 }

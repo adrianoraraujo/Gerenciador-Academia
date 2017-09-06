@@ -16,13 +16,13 @@
 
 
     <string-array name="diasSemana">
+        <item>Sab</item>
+        <item>Dom</item>
         <item>Seg</item>
         <item>Ter</item>
         <item>Qua</item>
         <item>Quin</item>
         <item>Sex</item>
-        <item>Sab</item>
-        <item>Dom</item>
     </string-array>
 
     <string-array name="meses">

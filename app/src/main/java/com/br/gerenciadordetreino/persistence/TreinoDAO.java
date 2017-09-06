@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.Treino;
+import com.br.gerenciadordetreino.utils.DateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +24,12 @@ public class TreinoDAO {
     }
 
     public static List<Treino> getTreinos(Context context) {
+        List<Treino> treinos = AppDatabase.getAppDatabase(context).treinoDao().getAllTreinos();
+        AppDatabase.destroyInstance();
+        return treinos;
+    }
+
+    public static List<Treino> getTreinos(Context context, Date data) {
         List<Treino> treinos = AppDatabase.getAppDatabase(context).treinoDao().getAllTreinos();
         AppDatabase.destroyInstance();
         return treinos;

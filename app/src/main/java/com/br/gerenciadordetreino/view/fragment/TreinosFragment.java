@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Treino;
@@ -37,8 +39,12 @@ public class TreinosFragment extends Fragment {
     WeekCalendar weekCalendar;
     @ViewById(R.id.id_selecionador_data)
     SelecionadorData selecionadorData;
+    @ViewById(R.id.tv_vazio)
+    TextView tvVazio;
 
     List<Treino> treinos =new ArrayList<>();
+    List<Treino> treinosWeek =new ArrayList<>();
+
     ExercicioAdapter treinosAdapter;
     DateTime dataSelecionada;
 
@@ -54,10 +60,13 @@ public class TreinosFragment extends Fragment {
         initValues();
         if(dataSelecionada == null) {
             dataSelecionada = DateTime.now();
-            refreshList();
+            initList();
         }
+    }
 
-
+    private void initList() {
+        treinos = TreinoDAO.getTreinos(getActivity() );
+        refreshList();
     }
 
     @Override
@@ -69,26 +78,38 @@ public class TreinosFragment extends Fragment {
     }
 
     private void refreshList() {
-        refreshTreinos();
+        selectTreinosWeek();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        setEmptyText();
+        selecionadorData.setDate(dataSelecionada.toDate());
+
         recyclerView.setLayoutManager(mLayoutManager);
-        treinosAdapter = new ExercicioAdapter(getTreinosWeek(dataSelecionada.toDate()), getActivity());
+        treinosAdapter = new ExercicioAdapter(treinosWeek, getActivity());
         recyclerView.setAdapter(treinosAdapter);
     }
 
-    private List<Treino> getTreinosWeek(Date date){
-        List<Treino> treinosWeek = new ArrayList<>();
-        int semanaAno = DateUtils.getWeekOfYear(date);
-        for(Treino t : treinos){
-            int semanaAnoTreino = DateUtils.getWeekOfYear(t.getData());
-            if(semanaAno == semanaAnoTreino){
-                treinosWeek.add(t);
-            }
+    private void setEmptyText() {
+        if(treinosWeek.isEmpty()){
+            tvVazio.setVisibility(View.VISIBLE);
+        }else{
+            tvVazio.setVisibility(View.GONE);
         }
-        return  treinosWeek;
     }
 
+//    private List<Treino> getTreinosWeek(Date date){
+//        List<Treino> treinosWeek = new ArrayList<>();
+//        int semanaAno = DateUtils.getWeekOfYear(date);
+//        for(Treino t : treinos){
+//            int semanaAnoTreino = DateUtils.getWeekOfYear(t.getData());
+//            if(semanaAno == semanaAnoTreino){
+//                treinosWeek.add(t);
+//            }
+//        }
+//        return  treinosWeek;
+//    }
+
     private void initValues() {
+        weekCalendar.setStartDate(DateTime.now());
         selecionadorData.goToday();
 
         weekCalendar.setOnWeekChangeListener(new OnWeekChangeListener() {
@@ -107,10 +128,18 @@ public class TreinosFragment extends Fragment {
         });
     }
 
-    private void refreshTreinos() {
-        treinos = TreinoDAO.getTreinos(getActivity());
+    private void selectTreinosWeek() {
+        Date primeiroDia = DateUtils.getPrimeiroDiaSemana(dataSelecionada.toDate());
+        Date ultimoDia = DateUtils.getUltimoDiaSemana(dataSelecionada.toDate());
+        treinosWeek = new ArrayList<>();
+        for(Treino t: treinos){
+            if(t.getData().getTime() >= primeiroDia.getTime() && t.getData().getTime() <= ultimoDia.getTime()){
+                treinosWeek.add(t);
+            }
+        }
+
         TreinosSort treinosSort = new TreinosSort();
-        Collections.sort(treinos, treinosSort);
+        Collections.sort(treinosWeek, treinosSort);
     }
 
     void movePositionList(DateTime dateTime){
@@ -118,6 +147,7 @@ public class TreinosFragment extends Fragment {
 
         //levar a lista ate essa data
         for(Treino treinoAtual: treinos){
+            //SEGUNDA É DOIS
             Date date = treinoAtual.getData();
             int dayWeekTreino = DateUtils.getDayWeek(date);
             if(dayWeek == dayWeekTreino){
@@ -126,14 +156,21 @@ public class TreinosFragment extends Fragment {
         }
     }
 
-    @Click(R.id.ic_direita)
-    void goNext(){
-        selecionadorData.goNext();
-    }
-
-    @Click(R.id.ic_esquerda)
-    void goLeft(){
-        selecionadorData.goBack();
-    }
+//    @Click(R.id.ic_direita)
+//    void goNext(){
+//        selecionadorData.goNext();
+//
+//        dataSelecionada =  selecionadorData.getDateSelected();
+//        weekCalendar.setSelectedDate(new DateTime(dataSelecionada));
+//        refreshList();
+//    }
+//
+//    @Click(R.id.ic_esquerda)
+//    void goLeft(){
+//        selecionadorData.goBack();
+//        dataSelecionada =  selecionadorData.getDateSelected();
+//        weekCalendar.setSelectedDate(new DateTime(dataSelecionada));
+//        refreshList();
+//    }
 
 }

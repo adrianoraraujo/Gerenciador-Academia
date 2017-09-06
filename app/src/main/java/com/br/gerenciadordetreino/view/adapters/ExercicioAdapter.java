@@ -66,10 +66,10 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
         Resources res = context.getResources();
         String semanas[] = res.getStringArray(R.array.diasSemana);
 
-        int diaMes = DateUtils.getDayMonth(item.getData()) + 1;
+        int diaSemana = DateUtils.getDayWeek(item.getData());
 
         holder.tvNome.setText(item.getNome());
-        holder.tvDiaSemana.setText(semanas[diaMes - 1]);
+        holder.tvDiaSemana.setText(semanas[diaSemana]);
         holder.tvDiaMes.setText(String.valueOf(DateUtils.getDayOfMonth(item.getData())));
         holder.tvCategoria.setText(item.getCategoria());
         holder.tvKilos.setText(String.valueOf(item.getPeso()));
