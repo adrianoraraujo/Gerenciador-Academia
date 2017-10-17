@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.br.gerenciadordetreino.view.fragment.EvolucaoFragment">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_evolucao"
+        android:background="@drawable/background_simulacao"
+        tools:listitem="@layout/item_evolucao_foto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

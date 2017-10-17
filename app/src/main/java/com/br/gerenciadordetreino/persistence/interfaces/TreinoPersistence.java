@@ -30,6 +30,9 @@ public  interface TreinoPersistence {
     @Query("SELECT COUNT(*) from Treino")
     int countTreinos();
 
+    @Query("SELECT * FROM Treino where categoria = :categoria ")
+    List<Treino> getTreinosForCategory(String categoria);
+
     @Insert
     void insertAll(Treino... treinos);
 

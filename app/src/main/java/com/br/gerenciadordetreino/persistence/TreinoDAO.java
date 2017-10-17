@@ -6,6 +6,8 @@ import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.utils.DateUtils;
 
+import org.androidannotations.annotations.App;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +35,12 @@ public class TreinoDAO {
         List<Treino> treinos = AppDatabase.getAppDatabase(context).treinoDao().getAllTreinos();
         AppDatabase.destroyInstance();
         return treinos;
+    }
+
+    public static List<Treino> getTreinosForCategory(Context context, String categoria ){
+        List<Treino> treinosForCategoria = AppDatabase.getAppDatabase(context).treinoDao().getTreinosForCategory(categoria);
+        AppDatabase.destroyInstance();
+        return  treinosForCategoria;
     }
 
     public static Treino getTreino(Context context, int id) {

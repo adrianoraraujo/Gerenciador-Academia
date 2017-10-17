@@ -3,9 +3,13 @@ package com.br.gerenciadordetreino.view;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +19,12 @@ import android.widget.Toast;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.notification.NotificationConfig;
+import com.br.gerenciadordetreino.notification.NotificationModel;
 import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
 import com.br.gerenciadordetreino.utils.DateUtils;
 import com.br.gerenciadordetreino.utils.PhotoUtils;
+import com.br.gerenciadordetreino.utils.SpinnerUtils;
 import com.github.siyamed.shapeimageview.CircularImageView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -57,6 +64,8 @@ public class CadastroEquipamentoActivity extends SuperActivity {
     LinearLayout llEditarFoto;
     @ViewById(R.id.img_circular_equipamento)
     CircularImageView imgEquipamento;
+    @ViewById(R.id.ll_body_cadastro)
+    LinearLayout llBodyCadastro;
 
     @Extra(EQUIPAMENTO)
     Equipamento equipamento;
@@ -90,8 +99,15 @@ public class CadastroEquipamentoActivity extends SuperActivity {
     @Click(R.id.btn_cadastrar_equipamento)
     void cadasstrarEquipamento() {
         setValuesInEquipamento();
-        EquipamentoDAO.addOrUpdate(CadastroEquipamentoActivity.this, equipamento);
-        closePopup();
+        if(!TextUtils.isEmpty(equipamento.getNome())){
+            EquipamentoDAO.addOrUpdate(CadastroEquipamentoActivity.this, equipamento);
+            agendNotification();
+            closePopup();
+        }else{
+            SuperActivity.showMessageSnack(llBodyCadastro, "O campo 'nome' não pode ficar vazio");
+        }
+
+
     }
 
     @Override
@@ -223,9 +239,7 @@ public class CadastroEquipamentoActivity extends SuperActivity {
     private void setValuesInSpinner() {
         Resources res = getResources();
         String categorias[] = res.getStringArray(R.array.categorias);
-        ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(this, R.layout.text_spinner, categorias);
-        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCategorias.setAdapter(adapterCategory);
+        SpinnerUtils.setValuesInSpinner(spnCategorias, this, categorias);
     }
 
     private void setPositionSpinner(String categoria) {
@@ -233,6 +247,11 @@ public class CadastroEquipamentoActivity extends SuperActivity {
         String categorias[] = res.getStringArray(R.array.categorias);
         int position = Arrays.asList(categorias).indexOf(categoria);
         spnCategorias.setSelection(position);
+    }
+
+    private void agendNotification() {
+        NotificationConfig notificationConfig = new NotificationConfig(this, equipamento);
+        notificationConfig.scheduleNotificatin(new NotificationModel("Alerta","Está a 10 dias sem malhar "+ equipamento.getNome() ));
     }
 
 

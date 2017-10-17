@@ -14,6 +14,8 @@
     <string name="historico">Histórico de treinos</string>
     <string name="valores_padroes">Valores Padrões</string>
     <string name="perfil">Perfil</string>
+    <string name="graficos">Gráficos</string>
+    <string name="evolucao">Evolução</string>
 
 
     <string-array name="diasSemana">

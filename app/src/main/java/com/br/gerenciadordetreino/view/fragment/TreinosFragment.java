@@ -129,6 +129,7 @@ public class TreinosFragment extends Fragment {
     }
 
     private void selectTreinosWeek() {
+        treinos = TreinoDAO.getTreinos(getActivity());
         Date primeiroDia = DateUtils.getPrimeiroDiaSemana(dataSelecionada.toDate());
         Date ultimoDia = DateUtils.getUltimoDiaSemana(dataSelecionada.toDate());
         treinosWeek = new ArrayList<>();

@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,10 +21,16 @@ import android.widget.TextView;
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.User;
 import com.br.gerenciadordetreino.utils.PhotoUtils;
+import com.br.gerenciadordetreino.view.adapters.EvolucaoAdapter;
 import com.br.gerenciadordetreino.view.fragment.CategoriaEquipamentoFragment;
 import com.br.gerenciadordetreino.view.fragment.CategoriaEquipamentoFragment_;
+import com.br.gerenciadordetreino.view.fragment.EvolucaoFragment;
+import com.br.gerenciadordetreino.view.fragment.EvolucaoFragment_;
+import com.br.gerenciadordetreino.view.fragment.graficos.PagerGraficosFragment;
 import com.br.gerenciadordetreino.view.fragment.TreinosFragment;
 import com.br.gerenciadordetreino.view.fragment.TreinosFragment_;
+import com.br.gerenciadordetreino.view.fragment.graficos.PagerGraficosFragment_;
+import com.br.gerenciadordetreino.view.listener.OnCameraEvolucaoCamera;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -37,15 +43,12 @@ import java.io.FileNotFoundException;
 @EActivity(R.layout.activity_home)
 public class HomeActivity extends SuperActivity {
 
-
     @ViewById
     LinearLayout container;
     @Extra("Usuario")
     User user;
     private DrawerLayout drawer;
-
-    //TODO ler esse tutorial http://www.android4devs.com/2014/12/how-to-make-material-design-navigation-drawer.html
-
+    OnCameraEvolucaoCamera onCameraEvolucaoCamera;
 
     @AfterViews
     public void initiViews() {
@@ -53,7 +56,7 @@ public class HomeActivity extends SuperActivity {
         setSupportActionBar(toolbar);
         setTextToolbar("MEUS EXERCÍCIOS");
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null,R.string.navigation_drawer_open,R.string.navigation_drawer_close) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             //QUANDO ABRIR O MENU LATERAL
             @Override
             public void onDrawerOpened(View v) {
@@ -85,12 +88,12 @@ public class HomeActivity extends SuperActivity {
         tvNomeUsuario.setText(user.getNome());
         Bitmap bitmap = null;
         try {
-            bitmap = PhotoUtils.getImage(HomeActivity.this,CadastroActivity.FOTO_USER);
+            bitmap = PhotoUtils.getImage(HomeActivity.this, CadastroUsuarioActivity.FOTO_USER);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        if (bitmap != null){
+        if (bitmap != null) {
             imgUser.setImageBitmap(bitmap);
         }
     }
@@ -117,6 +120,8 @@ public class HomeActivity extends SuperActivity {
         TextView tvMeusTreinos = (TextView) v.findViewById(R.id.tv_meus_treinos);
         TextView tvEquipamentos = (TextView) v.findViewById(R.id.tv_equipamentos);
         TextView tvPerfil = (TextView) v.findViewById(R.id.tv_perfil);
+        TextView tvGraficos = (TextView) v.findViewById(R.id.tv_graficos);
+        TextView tvEvolucao = (TextView) v.findViewById(R.id.tv_evolucao);
 
 
         //clicks
@@ -139,11 +144,29 @@ public class HomeActivity extends SuperActivity {
         tvPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CadastroActivity_.class);
+                Intent intent = new Intent(HomeActivity.this, CadastroUsuarioActivity_.class);
                 intent.putExtra("isEdicao", true);
                 startActivity(intent);
             }
         });
+
+        tvGraficos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagerGraficosFragment pagerGraficosFragment = PagerGraficosFragment_.newInstance();
+                startFragment(pagerGraficosFragment);
+            }
+        });
+
+        tvEvolucao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EvolucaoFragment evolucaoFragment = EvolucaoFragment_.newInstance();
+                startFragment(evolucaoFragment);
+            }
+        });
+
+
     }
 
     private void startFragment(Fragment fragment) {
@@ -154,7 +177,7 @@ public class HomeActivity extends SuperActivity {
         drawer.closeDrawer(Gravity.LEFT);
     }
 
-    private void startFragmentContainer(Fragment fragment){
+    private void startFragmentContainer(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
@@ -162,13 +185,39 @@ public class HomeActivity extends SuperActivity {
     }
 
     @Click(R.id.btn_menu)
-    void menuClick(){
+    void menuClick() {
         if (drawer.isDrawerOpen(Gravity.LEFT)) {
             drawer.closeDrawer(Gravity.LEFT);
         } else {
             drawer.openDrawer(Gravity.LEFT);
         }
-
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+
+            case EvolucaoAdapter.CODE_CAMERA_EVOLUCAO:
+                if (resultCode == RESULT_OK) {
+                    if (data != null) {
+                        try {
+                            Intent intentListener = getIntent();
+                            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                            EvolucaoAdapter.onCameraEvolucaoCamera.onSuccess(bitmap);
+                        } catch (Exception e) {
+                            EvolucaoAdapter.onCameraEvolucaoCamera.onError();
+                        }
+                    } else {
+                        EvolucaoAdapter.onCameraEvolucaoCamera.onCancel();
+                    }
+                } else {
+                    onCameraEvolucaoCamera.onError();
+                }
+
+                break;
+
+        }
+    }
 }

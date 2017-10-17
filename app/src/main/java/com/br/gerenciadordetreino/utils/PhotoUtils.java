@@ -42,8 +42,13 @@ public class PhotoUtils {
             fos.close();
             return true;
         } catch (Exception e) {
-            Log.e("saveToInternalStorage()", e.getMessage());
+            Log.e("saveToInternalStorage()", "Falha ao salvar foto");
             return  false;
         }
+    }
+
+    public static void deleteFoto(Context context, String path){
+        File filePath = context.getFileStreamPath(path);
+        filePath.delete();
     }
 }

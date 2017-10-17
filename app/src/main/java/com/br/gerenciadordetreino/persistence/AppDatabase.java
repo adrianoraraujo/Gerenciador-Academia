@@ -7,15 +7,18 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.model.Foto;
 import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.model.User;
 import com.br.gerenciadordetreino.persistence.converters.Converters;
+import com.br.gerenciadordetreino.persistence.converters.FotoConverter;
 import com.br.gerenciadordetreino.persistence.interfaces.EquipamentoPersistence;
+import com.br.gerenciadordetreino.persistence.interfaces.FotoPersistence;
 import com.br.gerenciadordetreino.persistence.interfaces.TreinoPersistence;
 import com.br.gerenciadordetreino.persistence.interfaces.UserPersistence;
 
-@Database(entities = {User.class, Equipamento.class, Treino.class}, version = 8)
-@TypeConverters({Converters.class})
+@Database(entities = {User.class, Equipamento.class, Treino.class, Foto.class}, version = 13, exportSchema = false)
+@TypeConverters({Converters.class, FotoConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -23,6 +26,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserPersistence userDao();
     public abstract EquipamentoPersistence equipamentoDao();
     public abstract TreinoPersistence treinoDao();
+    public abstract FotoPersistence fotoPersistence();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {

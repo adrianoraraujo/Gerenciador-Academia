@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -27,7 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @EActivity(R.layout.activity_cadastro)
-public class CadastroActivity extends SuperActivity {
+public class CadastroUsuarioActivity extends SuperActivity {
     private static final int CODE_CAMERA = 30;
     public static final String FOTO_USER = "foto_user";
 
@@ -43,6 +44,10 @@ public class CadastroActivity extends SuperActivity {
     RadioButton rbFemea;
     @ViewById(R.id.rb_macho)
     RadioButton rbMacho;
+    @ViewById(R.id.edt_peso)
+    EditText edtPeso;
+    @ViewById(R.id.ll_body_usuario)
+    LinearLayout llBodyUsuario;
 
     @Extra("isEdicao")
     boolean isEdicao;
@@ -54,15 +59,15 @@ public class CadastroActivity extends SuperActivity {
     @AfterViews
     void init() {
         addMasks();
-        user = UserDAO.getUser(CadastroActivity.this);
-        if(user == null){
+        user = UserDAO.getUser(CadastroUsuarioActivity.this);
+        if (user == null) {
             user = new User();
 
-        }else{
-            if(isEdicao){
+        } else {
+            if (isEdicao) {
                 setValuesUsuarioInFields();
-            }else {
-                goActivity();
+            } else {
+                goHomeActivity();
             }
         }
     }
@@ -70,19 +75,18 @@ public class CadastroActivity extends SuperActivity {
     @Click(R.id.btn_cadastrar)
     void cadastrar() {
         setValuesInUsuario();
-        if(validadeFields()) {
+        if (validadeFields()) {
             saveUserInFirebase();
             saveUserInDatabase();
-
-            goActivity();
-        }else{
-            //TODO:"Preencha todos os campos" Dialog
+            goHomeActivity();
+        } else {
+            SuperActivity.showMessageSnack(llBodyUsuario, "Preencha o campo 'Nome'");
         }
 
     }
 
     @Click(R.id.ll_editar_foto)
-    void tirarFoto(){
+    void tirarFoto() {
         iniciarCamera();
     }
 
@@ -117,11 +121,12 @@ public class CadastroActivity extends SuperActivity {
         carregaFoto();
         edtNome.setText(user.getNome());
         edtIdade.setText(user.getDataNascimento());
+        edtPeso.setText(String.valueOf(user.getPeso()));
 
-        if(user.getSexo().equals(UsuarioEnum.MACHO.name())){
+        if (user.getSexo().equals(UsuarioEnum.MACHO.name())) {
             rbMacho.setChecked(true);
             rbFemea.setChecked(false);
-        }else{
+        } else {
             rbFemea.setChecked(true);
             rbMacho.setChecked(false);
         }
@@ -132,23 +137,29 @@ public class CadastroActivity extends SuperActivity {
         user.setNome(edtNome.getText().toString());
         user.setDataNascimento(edtIdade.getText().toString());
         user.setPathFoto(nomePath);
+        String peso = edtPeso.getText().toString();
+        if (peso.isEmpty()) {
+            user.setPeso(0);
+        } else {
+            user.setPeso(Double.parseDouble(peso));
+        }
 
         try {
-            PhotoUtils.savePhotoInFile(this,bitmap, FOTO_USER );
+            PhotoUtils.savePhotoInFile(this, bitmap, FOTO_USER);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(idEscolhaSexo == R.id.rb_macho){
+        if (idEscolhaSexo == R.id.rb_macho) {
             user.setSexo(UsuarioEnum.MACHO.name());
-        }else if(idEscolhaSexo == R.id.rb_femea){
+        } else if (idEscolhaSexo == R.id.rb_femea) {
             user.setSexo(UsuarioEnum.FÊMEA.name());
         }
     }
 
     private void carregaFoto() {
         try {
-            bitmap = PhotoUtils.getImage(CadastroActivity.this, FOTO_USER);
-            if(bitmap != null){
+            bitmap = PhotoUtils.getImage(CadastroUsuarioActivity.this, FOTO_USER);
+            if (bitmap != null) {
                 imgUser.setImageBitmap(bitmap);
             }
         } catch (FileNotFoundException e) {
@@ -157,30 +168,34 @@ public class CadastroActivity extends SuperActivity {
 
     }
 
-    private void saveUserInFirebase(){
-        String android_id = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
-       user.setId(android_id);
+    private void saveUserInFirebase() {
+        String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        user.setId(android_id);
         UserFirebase userFirebase = new UserFirebase();
         userFirebase.save(user);
     }
-    private void saveUserInDatabase(){
+
+    private void saveUserInDatabase() {
         user.setId("1");
         UserDAO.createUser(this, user);
     }
 
-    private boolean validadeFields(){
-        //TODO:validar campos vazios
-        return  true;
+    private boolean validadeFields() {
+        if (edtNome.getText().toString().isEmpty()) {
+            return false;
+        }
+        return true;
     }
-    private void goActivity() {
-        Intent intent = new Intent(CadastroActivity.this, HomeActivity_.class);
+
+    private void goHomeActivity() {
+        Intent intent = new Intent(CadastroUsuarioActivity.this, HomeActivity_.class);
         intent.putExtra("Usuario", user);
         startActivity(intent);
         finish();
     }
 
-    private void addMasks(){
-        edtIdade.addTextChangedListener(Mask.insert("##/##/####",edtIdade));
+    private void addMasks() {
+        edtIdade.addTextChangedListener(Mask.insert("##/##/####", edtIdade));
     }
 
 

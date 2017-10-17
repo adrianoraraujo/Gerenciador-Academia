@@ -1,8 +1,10 @@
 package com.br.gerenciadordetreino.persistence;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.model.Treino;
 
 import org.androidannotations.annotations.App;
 
@@ -41,5 +43,11 @@ public class EquipamentoDAO {
     public  static  void updateUser(Context context, Equipamento equipamento){
         AppDatabase.getAppDatabase(context).equipamentoDao().update(equipamento);
         AppDatabase.destroyInstance();
+    }
+
+    public static List<Equipamento> getEquipamentsForCategory(Context context, String categoria) {
+        List<Equipamento> equipamentos =  AppDatabase.getAppDatabase(context).equipamentoDao().getEquipamentsForCategory(categoria);
+        AppDatabase.destroyInstance();
+        return equipamentos;
     }
 }

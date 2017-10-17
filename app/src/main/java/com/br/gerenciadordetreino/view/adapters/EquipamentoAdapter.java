@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
+import com.br.gerenciadordetreino.notification.NotificationConfig;
+import com.br.gerenciadordetreino.notification.NotificationModel;
 import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
 import com.br.gerenciadordetreino.utils.DateUtils;
 import com.br.gerenciadordetreino.utils.PhotoUtils;
@@ -112,6 +114,7 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
                 alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        cancelNotification(equipamento);
                         EquipamentoDAO.deleteEquipamento(context, equipamento);
                         equipamentos.remove(position);
                         notifyDataSetChanged();
@@ -160,6 +163,7 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
                 ((AppCompatActivity)context).startActivity(intent);
                 ((AppCompatActivity) context).overridePendingTransition(R.anim.popup_fragment_enter_anim, R.anim.popup_fragment_exit_anim);
 
+
             }
         });
     }
@@ -207,5 +211,10 @@ public class EquipamentoAdapter extends RecyclerView.Adapter<EquipamentoAdapter.
             }
         }
 
+    }
+
+    private void cancelNotification(Equipamento equipamento) {
+        NotificationConfig notificationConfig = new NotificationConfig(context, equipamento);
+        notificationConfig.cancelNotification();
     }
 }

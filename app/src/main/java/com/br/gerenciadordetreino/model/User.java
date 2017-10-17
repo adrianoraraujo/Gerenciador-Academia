@@ -2,9 +2,15 @@ package com.br.gerenciadordetreino.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
+import android.arch.persistence.room.TypeConverters;
+
+import com.br.gerenciadordetreino.persistence.converters.FotoConverter;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by joaov on 11/07/2017.
@@ -21,7 +27,27 @@ public class User implements Serializable {
     private String sexo;
     @ColumnInfo(name = "pathFoto")
     private String pathFoto;
+    @ColumnInfo(name = "peso")
+    private double peso;
+    @Ignore
+    private List<Foto> fotosEvolucao;
 
+
+    public List<Foto> getFotosEvolucao() {
+        return fotosEvolucao;
+    }
+
+    public void setFotosEvolucao(List<Foto> fotosEvolucao) {
+        this.fotosEvolucao = fotosEvolucao;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
 
     public String getId() {
         return id;

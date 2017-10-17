@@ -6,11 +6,14 @@
     android:layout_marginLeft="12dp"
     android:layout_marginRight="12dp"
     android:layout_marginTop="40dp"
-    android:layout_marginBottom="60dp"
     android:background="@color/pataFilhoteElefante"
+    android:id="@+id/ll_body_cadastro"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_popup"></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -72,26 +75,26 @@
 
                         <EditText
                             android:id="@+id/edt_name"
-                            android:lines="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_bottom_cadastro_exercicio"
                             android:hint="Nome"
-                            android:textColorHint="@color/branco"
-                            android:textColor="@color/branco" />
+                            android:lines="1"
+                            android:textColor="@color/branco"
+                            android:textColorHint="@color/branco" />
 
 
                         <LinearLayout
-                            android:background="@drawable/rounded_edittext_azul"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_bottom_cadastro_exercicio"
-                            android:layout_height="wrap_content">
-                        <android.support.v7.widget.AppCompatSpinner
-                            android:id="@+id/spinner_categorias"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp">
-                        </android.support.v7.widget.AppCompatSpinner>
+                            android:background="@drawable/rounded_edittext_azul"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_categorias"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"></android.support.v7.widget.AppCompatSpinner>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -221,27 +224,28 @@
                     android:hint="Observações"
                     android:minHeight="110dp"
                     android:textColor="#000"
+                    android:layout_marginBottom="30dp"
                     android:textColorHint="#000" />
 
             </android.support.v7.widget.CardView>
+
+
         </LinearLayout>
+
     </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_cadastrar_equipamento"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:gravity="center"
-            android:text="CADASTRAR"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/btn_cadastrar_equipamento"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="75dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="CADASTRAR"
+        android:textSize="20sp"
+        android:textStyle="bold" />
     </RelativeLayout>
 </LinearLayout>

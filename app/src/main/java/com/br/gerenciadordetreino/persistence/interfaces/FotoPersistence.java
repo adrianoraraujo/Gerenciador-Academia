@@ -16,22 +16,22 @@ import java.util.List;
  */
 
 @Dao
-public  interface UserPersistence {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+public  interface FotoPersistence {
+    @Query("SELECT * FROM foto")
+    List<Foto> getAll();
 
-    @Query("SELECT * FROM user where id LIKE  :id")
-    User findByName(String id);
+    @Query("SELECT * FROM foto where id LIKE  :path")
+    Foto findByName(String path);
 
-    @Query("SELECT COUNT(*) from user")
-    int countUsers();
+    @Query("SELECT COUNT(*) from foto")
+    int countFoto();
 
     @Insert
-    void insertAll(User... users);
+    void insertAll(Foto... foto);
 
     @Delete
-    void delete(User user);
+    void delete(Foto foto);
 
     @Update
-    void update(User user);
+    void update(Foto foto);
 }

@@ -25,6 +25,8 @@ public  interface EquipamentoPersistence {
 
     @Query("SELECT COUNT(*) from equipamento")
     int countEquipamentos();
+    @Query("SELECT * FROM equipamento where categoria = :categoria")
+    List<Equipamento> getEquipamentsForCategory(String categoria);
 
     @Insert
     void insertAll(Equipamento... equipamentos);

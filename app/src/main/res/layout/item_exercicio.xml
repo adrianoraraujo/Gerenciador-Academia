@@ -8,9 +8,9 @@
 
         <TextView
             android:id="@+id/tv_categoria"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_gravity="center"
-            android:text="PERNAS"
+            android:text="PEITO"
             android:layout_marginTop="3dp"
             android:textStyle="bold"
             android:textAllCaps="true"

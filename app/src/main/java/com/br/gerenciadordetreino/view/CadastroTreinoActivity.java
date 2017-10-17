@@ -6,6 +6,8 @@ import android.widget.TextView;
 import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.model.Treino;
+import com.br.gerenciadordetreino.notification.NotificationConfig;
+import com.br.gerenciadordetreino.notification.NotificationModel;
 import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
 import com.br.gerenciadordetreino.persistence.TreinoDAO;
 import com.shawnlin.numberpicker.NumberPicker;
@@ -65,6 +67,7 @@ public class CadastroTreinoActivity extends SuperActivity {
                 setValuesInTreino();
                 saveDateEquipament();
                 saveTreino();
+                cancelAndAgendNotification(equipamento);
                 finish();
                 break;
 
@@ -161,6 +164,11 @@ public class CadastroTreinoActivity extends SuperActivity {
             npSeries.setValue(treino.getSerie());
             npRepeticoes.setValue(treino.getRepeticoes());
         }
+    }
+
+    private void cancelAndAgendNotification(Equipamento equipamento) {
+        NotificationConfig notificationConfig = new NotificationConfig(CadastroTreinoActivity.this, equipamento);
+        notificationConfig.cancelAndScheduleNotification(new NotificationModel("Alerta","Está a 10 dias sem malhar "+ equipamento.getNome() ));
     }
 
 }

@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:alpha="15"
             app:elevation="6dp"
+            app:backgroundTint="@color/colorAccent"
             app:fabSize="normal"/>
 
 

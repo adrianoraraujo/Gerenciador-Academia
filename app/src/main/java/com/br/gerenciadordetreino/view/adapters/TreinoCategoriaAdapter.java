@@ -27,6 +27,7 @@ import java.util.List;
 public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.TreinoHolder> {
     List<Treino> treinos = new ArrayList<>();
     private Context context;
+    private String title;
 
     public ExercicioAdapter(List<Treino> treinos, Context context) {
         this.treinos = treinos;
@@ -42,7 +43,7 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
     @Override
     public void onBindViewHolder(TreinoHolder holder, int position) {
         final Treino item = treinos.get(position);
-        setTitulo(holder, item,position);
+        setTitulo(holder, item);
         setValuesInViews(holder, item);
 
 
@@ -76,18 +77,13 @@ public class ExercicioAdapter extends RecyclerView.Adapter<ExercicioAdapter.Trei
         holder.tvSeries.setText(String.valueOf(item.getSerie()));
     }
 
-    private void setTitulo(TreinoHolder holder, Treino item, int position) {
-        if(position > 0) {
-            if (!item.getCategoria().equalsIgnoreCase(treinos.get(position - 1).getCategoria())) {
-                holder.tvCategoria.setVisibility(View.VISIBLE);
-                holder.tvCategoria.setText(item.getCategoria());
-            } else {
-                holder.tvCategoria.setVisibility(View.GONE);
-            }
-        }else{
+    private void setTitulo(TreinoHolder holder, Treino item) {
+        if (item.getCategoria().equalsIgnoreCase(title)) {
+            holder.tvCategoria.setVisibility(View.GONE);
+        } else {
             holder.tvCategoria.setVisibility(View.VISIBLE);
-            holder.tvCategoria.setText(item.getCategoria());
         }
+        title = item.getCategoria();
     }
 
     @Override

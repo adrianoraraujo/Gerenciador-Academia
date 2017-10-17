@@ -92,4 +92,9 @@ public class Treino implements Serializable {
     public void setData(Date data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

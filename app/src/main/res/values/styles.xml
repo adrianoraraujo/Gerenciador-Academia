@@ -64,6 +64,10 @@
         <item name="android:textColor">@color/branco</item>
     </style>
 
+    <style name="SpinnerGraficos" parent="Base.Theme.AppCompat.Light">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
 
     <style name="EditTextStylePopup" parent="Widget.AppCompat.EditText">
         <item name="android:textColorHint">#e26b6b6b</item>
