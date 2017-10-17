@@ -187,12 +187,6 @@ public class GraficosEquipamentoFragment extends Fragment {
         pieChart.animateXY(1400, 1400);
 
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
 }
 
 

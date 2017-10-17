@@ -139,11 +139,6 @@ public class GraficosCategoriaFragment extends Fragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
 }
 
 

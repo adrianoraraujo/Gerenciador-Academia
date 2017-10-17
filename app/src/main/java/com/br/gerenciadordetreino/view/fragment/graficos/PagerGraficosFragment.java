@@ -100,15 +100,4 @@ public class PagerGraficosFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.i("","d");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().getFragmentManager().popBackStack();
-    }
 }
