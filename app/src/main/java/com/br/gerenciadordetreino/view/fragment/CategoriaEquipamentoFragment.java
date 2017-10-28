@@ -12,6 +12,7 @@ import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Equipamento;
 import com.br.gerenciadordetreino.persistence.EquipamentoDAO;
 import com.br.gerenciadordetreino.view.CadastroEquipamentoActivity_;
+import com.br.gerenciadordetreino.view.SuperActivity;
 import com.br.gerenciadordetreino.view.adapters.CategoriaEquipamentosAdapter;
 
 import org.androidannotations.annotations.AfterViews;
@@ -44,6 +45,7 @@ public class CategoriaEquipamentoFragment extends Fragment {
 
     @AfterViews
     void init() {
+        SuperActivity.setTextToolbar(getActivity(), "Meus Equipamentos");
         refreshCategorias();
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);

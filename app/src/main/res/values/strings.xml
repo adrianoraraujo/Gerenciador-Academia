@@ -16,6 +16,7 @@
     <string name="perfil">Perfil</string>
     <string name="graficos">Gráficos</string>
     <string name="evolucao">Evolução</string>
+    <string name="afiliados">Afiliados</string>
 
 
     <string-array name="diasSemana">

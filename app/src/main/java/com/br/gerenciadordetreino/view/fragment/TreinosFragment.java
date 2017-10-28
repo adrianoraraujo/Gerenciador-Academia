@@ -11,6 +11,7 @@ import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.Treino;
 import com.br.gerenciadordetreino.persistence.TreinoDAO;
 import com.br.gerenciadordetreino.utils.DateUtils;
+import com.br.gerenciadordetreino.view.SuperActivity;
 import com.br.gerenciadordetreino.view.adapters.ExercicioAdapter;
 import com.br.gerenciadordetreino.view.custom.SelecionadorData;
 import com.br.gerenciadordetreino.view.ordenacao.TreinosSort;
@@ -57,6 +58,7 @@ public class TreinosFragment extends Fragment {
 
     @AfterViews
     void initView() {
+        SuperActivity.setTextToolbar(getActivity(), "Registro de Treinos");
         initValues();
         if(dataSelecionada == null) {
             dataSelecionada = DateTime.now();

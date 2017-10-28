@@ -43,7 +43,7 @@ public class EvolucaoFragment extends Fragment {
 
     @AfterViews
     void init() {
-        initToolbar();
+        SuperActivity.setTextToolbar(getActivity(), "Estande de Evolução");
         fotos = FotoDAO.getFotos(getActivity());
         fotos.add(new Foto("", new Date()));
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -71,10 +71,6 @@ public class EvolucaoFragment extends Fragment {
         };
 
         handler.postDelayed(runnable,speedScroll);
-    }
-
-    private void initToolbar() {
-        SuperActivity.setTextToolbar(getActivity(), "EVOLUÇÃO");
     }
 
 }

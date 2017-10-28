@@ -53,6 +53,7 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile 'com.github.vivchar:ViewPagerIndicator:v1.0.1'
     apt 'android.arch.persistence.room:compiler:1.0.0-alpha1'
+    compile 'com.github.wenchaojiang:AndroidSwipeableCardStack:0.1.5'
 }
 
 android {

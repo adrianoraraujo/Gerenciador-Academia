@@ -59,7 +59,6 @@ public class GraficosCategoriaFragment extends Fragment {
 
     @AfterViews
     void init() {
-        SuperActivity.setTextToolbar(getActivity(), "GRÁFICOS");
         Resources res = getContext().getResources();
         categorias = res.getStringArray(R.array.categorias);
         List<Treino> treinos = TreinoDAO.getTreinos(getActivity());

@@ -65,7 +65,6 @@ public class GraficosEquipamentoFragment extends Fragment {
 
     @AfterViews
     void init() {
-        SuperActivity.setTextToolbar(getActivity(), "GRÁFICOS");
         Resources res = getContext().getResources();
         categorias = res.getStringArray(R.array.categorias);
         setValuesInSpinner();

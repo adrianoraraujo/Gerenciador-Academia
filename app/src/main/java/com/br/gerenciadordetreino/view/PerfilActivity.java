@@ -28,7 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @EActivity(R.layout.activity_cadastro)
-public class CadastroUsuarioActivity extends SuperActivity {
+public class PerfilActivity extends SuperActivity {
     private static final int CODE_CAMERA = 30;
     public static final String FOTO_USER = "foto_user";
 
@@ -59,7 +59,7 @@ public class CadastroUsuarioActivity extends SuperActivity {
     @AfterViews
     void init() {
         addMasks();
-        user = UserDAO.getUser(CadastroUsuarioActivity.this);
+        user = UserDAO.getUser(PerfilActivity.this);
         if (user == null) {
             user = new User();
 
@@ -158,7 +158,7 @@ public class CadastroUsuarioActivity extends SuperActivity {
 
     private void carregaFoto() {
         try {
-            bitmap = PhotoUtils.getImage(CadastroUsuarioActivity.this, FOTO_USER);
+            bitmap = PhotoUtils.getImage(PerfilActivity.this, FOTO_USER);
             if (bitmap != null) {
                 imgUser.setImageBitmap(bitmap);
             }
@@ -188,7 +188,7 @@ public class CadastroUsuarioActivity extends SuperActivity {
     }
 
     private void goHomeActivity() {
-        Intent intent = new Intent(CadastroUsuarioActivity.this, HomeActivity_.class);
+        Intent intent = new Intent(PerfilActivity.this, HomeActivity_.class);
         intent.putExtra("Usuario", user);
         startActivity(intent);
         finish();

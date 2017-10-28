@@ -43,9 +43,12 @@ public class PagerGraficosFragment extends Fragment {
 
     @AfterViews
     void init() {
+        SuperActivity.setTextToolbar(getActivity(), "Gráficos");
         initDate();
         setEventChangeListener();
-        CostumAdapterPager  costumAdapterPager= new CostumAdapterPager(getActivity().getSupportFragmentManager());
+        initFragments();
+
+        CostumAdapterPager  costumAdapterPager= new CostumAdapterPager(getActivity().getSupportFragmentManager(), fragments);
         vpPager.setAdapter(costumAdapterPager);
         initPagerIndicator();
     }
@@ -73,31 +76,8 @@ public class PagerGraficosFragment extends Fragment {
 
     private void initFragments() {
         fragments = new ArrayList<>();
-        fragments.add(GraficosCategoriaFragment_.builder().build());
-        fragments.add(GraficosEquipamentoFragment_.builder().build());
-    }
-
-    private class CostumAdapterPager extends FragmentPagerAdapter {
-        public CostumAdapterPager(FragmentManager supportFragmentManager) {
-            super(supportFragmentManager);
-            initFragments();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return   fragments.get(position);
-        }
-
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "";
-        }
+        fragments.add(GraficosCategoriaFragment_.newInstance());
+        fragments.add(GraficosEquipamentoFragment_.newInstance());
     }
 
 }

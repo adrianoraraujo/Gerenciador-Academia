@@ -10,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,10 +21,12 @@ import com.br.gerenciadordetreino.R;
 import com.br.gerenciadordetreino.model.User;
 import com.br.gerenciadordetreino.utils.PhotoUtils;
 import com.br.gerenciadordetreino.view.adapters.EvolucaoAdapter;
+import com.br.gerenciadordetreino.view.fragment.afiliados.AfiliadosFragment;
 import com.br.gerenciadordetreino.view.fragment.CategoriaEquipamentoFragment;
 import com.br.gerenciadordetreino.view.fragment.CategoriaEquipamentoFragment_;
 import com.br.gerenciadordetreino.view.fragment.EvolucaoFragment;
 import com.br.gerenciadordetreino.view.fragment.EvolucaoFragment_;
+import com.br.gerenciadordetreino.view.fragment.afiliados.AfiliadosFragment_;
 import com.br.gerenciadordetreino.view.fragment.graficos.PagerGraficosFragment;
 import com.br.gerenciadordetreino.view.fragment.TreinosFragment;
 import com.br.gerenciadordetreino.view.fragment.TreinosFragment_;
@@ -88,7 +89,7 @@ public class HomeActivity extends SuperActivity {
         tvNomeUsuario.setText(user.getNome());
         Bitmap bitmap = null;
         try {
-            bitmap = PhotoUtils.getImage(HomeActivity.this, CadastroUsuarioActivity.FOTO_USER);
+            bitmap = PhotoUtils.getImage(HomeActivity.this, PerfilActivity.FOTO_USER);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -122,6 +123,7 @@ public class HomeActivity extends SuperActivity {
         TextView tvPerfil = (TextView) v.findViewById(R.id.tv_perfil);
         TextView tvGraficos = (TextView) v.findViewById(R.id.tv_graficos);
         TextView tvEvolucao = (TextView) v.findViewById(R.id.tv_evolucao);
+        TextView tvAfiliados = (TextView) v.findViewById(R.id.tv_afiliados);
 
 
         //clicks
@@ -144,7 +146,7 @@ public class HomeActivity extends SuperActivity {
         tvPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CadastroUsuarioActivity_.class);
+                Intent intent = new Intent(HomeActivity.this, PerfilActivity_.class);
                 intent.putExtra("isEdicao", true);
                 startActivity(intent);
             }
@@ -163,6 +165,14 @@ public class HomeActivity extends SuperActivity {
             public void onClick(View v) {
                 EvolucaoFragment evolucaoFragment = EvolucaoFragment_.newInstance();
                 startFragment(evolucaoFragment);
+            }
+        });
+
+        tvAfiliados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AfiliadosFragment afiliadosFragment = AfiliadosFragment_.newInstance();
+                startFragment(afiliadosFragment);
             }
         });
 

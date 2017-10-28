@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.br.gerenciadordetreino">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,15 +12,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        tools:replace="android:icon"
         android:theme="@style/AppTheme">
-
         <receiver android:name=".notification.NotificationService"/>
         <activity
-            android:name=".view.CadastroUsuarioActivity_"
+            android:name=".view.PerfilActivity_"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
